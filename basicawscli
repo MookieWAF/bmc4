@@ -1,0 +1,61 @@
+EC2
+List Instance ID, Type and Name
+
+aws ec2 describe-instances 
+ 
+
+List Instances with public IP address and Name
+
+aws ec2 describe-instances
+ 
+
+List VPCs and CIDR IP Block
+
+aws ec2 describe-vpcs 
+ 
+
+List Subnets for a VPC
+
+aws ec2 describe-subnets 
+ 
+
+List Security Groups
+
+aws ec2 describe-security-groups 
+ 
+
+Print Security Groups for an Instance
+
+aws ec2 describe-instances 
+ 
+
+Edit Security Groups of an Instance
+
+aws ec2 modify-instance-attribute --instance-id i-0dae5d4daa47fe4a2 --groups sg-02a63c67684d8deed sg-0dae5d4daa47fe4a2
+ 
+
+Print Security Group Rules as FromAddress and ToPort
+
+aws ec2 describe-security-groups --group-ids sg-02a63c67684d8deed | jq -r '.SecurityGroups[].IpPermissions[]|. as $parent|(.IpRanges[].CidrIp+" "+($parent.ToPort|tostring))'
+ 
+
+Add Rule to Security Group
+
+aws ec2 authorize-security-group-ingress --group-id sg-02a63c67684d8deed --protocol tcp --port 443 --cidr 35.0.0.1
+ 
+
+Delete Rule from Security Group
+
+aws ec2 revoke-security-group-ingress --group-id sg-02a63c67684d8deed --protocol tcp --port 443 --cidr 35.0.0.1
+ 
+
+Edit Rules of Security Group
+
+aws ec2 update-security-group-rule-descriptions-ingress --group-id sg-02a63c67684d8deed --ip-permissions 'ToPort=443,IpProtocol=tcp,IpRanges=[{CidrIp=202.171.186.133/32,Description=Home}]'
+ 
+
+Delete Security Group
+
+aws ec2 delete-security-group --group-id sg-02a63c67684d8deed
+ 
+ 
